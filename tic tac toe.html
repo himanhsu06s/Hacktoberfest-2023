@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tic Tac Toe</title>
+    <style>
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            width: 310px;
+        }
+        .box {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="box" onclick="boxClicked(0)"></div>
+        <div class="box" onclick="boxClicked(1)"></div>
+        <div class="box" onclick="boxClicked(2)"></div>
+        <div class="box" onclick="boxClicked(3)"></div>
+        <div class="box" onclick="boxClicked(4)"></div>
+        <div class="box" onclick="boxClicked(5)"></div>
+        <div class="box" onclick="boxClicked(6)"></div>
+        <div class="box" onclick="boxClicked(7)"></div>
+        <div class="box" onclick="boxClicked(8)"></div>
+    </div>
+
+    <script>
+        let currentPlayer = 'X';
+        let board = Array(9).fill('');
+
+        function boxClicked(index) {
+            if (board[index] === '') {
+                board[index] = currentPlayer;
+                document.getElementsByClassName('box')[index].innerText = currentPlayer;
+                checkWinner();
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            }
+        }
+
+        function checkWinner() {
+            const winningConditions = [
+                [0, 1, 2],
+                [3, 4, 5],
+                [6, 7, 8],
+                [0, 3, 6],
+                [1, 4, 7],
+                [2, 5, 8],
+                [0, 4, 8],
+                [2, 4, 6]
+            ];
+
+            for (let i = 0; i < winningConditions.length; i++) {
+                const [a, b, c] = winningConditions[i];
+                if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+                    alert(`${board[a]} wins!`);
+                    resetBoard();
+                    return;
+                }
+            }
+
+            if (!board.includes('')) {
+                alert("It's a draw!");
+                resetBoard();
+            }
+        }
+
+        function resetBoard() {
+            board = Array(9).fill('');
+            for (let i = 0; i < 9; i++) {
+                document.getElementsByClassName('box')[i].innerText = '';
+            }
+        }
+    </script>
+</body>
+</html>
